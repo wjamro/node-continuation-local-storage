@@ -55,7 +55,11 @@ Namespace.prototype.run = function (fn) {
     throw exception;
   }
   finally {
-    this.exit(context);
+    if(context && context.res) {
+      context.res.on('finish', function() {
+        this.exit(context);
+      });
+    }
   }
 };
 
